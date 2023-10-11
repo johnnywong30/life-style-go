@@ -1,0 +1,16 @@
+click
+decouple
+fastapi
+h11
+httptools
+httpx
+passlib
+python-jose
+starlette
+uvicorn
+websockets
+pyjwt
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart
+strawberry-graphql[fastapi]

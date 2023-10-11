@@ -1,0 +1,15 @@
+version: "1"
+networks:
+  life-style-go:
+    driver: bridge
+services:
+  api:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    volumes:
+      - ./app:/usr/src/app/
+    ports:
+      - "8001:8001"
+    networks:
+      - life-style-go

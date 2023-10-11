@@ -1,0 +1,4 @@
+kombu
+pydantic
+pymongo
+python-dotenv
