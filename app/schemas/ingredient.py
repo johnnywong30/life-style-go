@@ -1,7 +1,7 @@
 import strawberry
-import typing
+from app.models.Ingredient import Ingredient
 
 
-@strawberry.type
+@strawberry.experimental.pydantic.type(model=Ingredient, all_fields=True)
 class Ingredient:
-    name: str
+    pass
