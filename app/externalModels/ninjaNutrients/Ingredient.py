@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from pydantic import BaseModel
 from typing import Dict, List
 from app.models.Ingredient import Carbohydrate, Fat, Protein, Ingredient
+from app.data.mongo.Food import getFoods, addFoods
 
 load_dotenv()
 
@@ -77,15 +78,19 @@ class NinjaNutritionClient:
         self.ninja_url = "https://api.api-ninjas.com/v1/nutrition"
         self.headers = {"X-Api-Key": self.api_key}
 
-    async def query(self, foodQuery: str) -> List[NinjaFood]:
-        foodQuery = foodQuery.strip().lower()
-        # TODO query MongoDB first
-
-        # query Ninja api if this query is brand new
+    async def __queryNinja__(self, foodQuery: str) -> List[NinjaFood]:
         queryURL = f"{self.ninja_url}?query={foodQuery}"
         response = await self.client.get(url=queryURL, headers=self.headers)
-        ninjaFoods = json.loads(response.text)
+        ninjaFoods: List[Dict[str, str]] = json.loads(response.text)
         ninjaFoods = [NinjaFood(**food) for food in ninjaFoods]
-        # save in MongoDB
+        return ninjaFoods
 
-        return response.json()
+    async def query(self, foodQuery: str) -> List[NinjaFood]:
+        foodQuery = foodQuery.strip().lower()
+        foods = getFoods(query=foodQuery)
+        if len(foods) == 0:
+            # get new foods for query
+            foods = await self.__queryNinja__(foodQuery)
+            # insert into MongoDB
+            foods = addFoods(query=foodQuery, foods=foods)
+        return foods
