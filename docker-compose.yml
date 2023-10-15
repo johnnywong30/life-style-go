@@ -13,3 +13,20 @@ services:
       - "8001:8001"
     networks:
       - life-style-go
+  redis:
+    hostname: redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - life-style-go
+  mongo:
+    image: mongo:latest
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    ports:
+      - ${MONGO_PORT}:${MONGO_PORT}
+    networks:
+      - life-style-go

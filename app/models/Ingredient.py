@@ -25,8 +25,10 @@ class Protein(Macro):
 
 class Ingredient(BaseModel):
     name: str
-    category: INGREDIENT_CATEGORY
+    # category: INGREDIENT_CATEGORY
+    calories: float
     unit: INGREDIENT_UNIT
+    servingSize: float
     carbohydrate: Carbohydrate
     fat: Fat
     protein: Protein
