@@ -1,33 +1,33 @@
 from pydantic import BaseModel
-from app.models import INGREDIENT_UNIT
-from typing import Literal
+from app.models import INGREDIENT_UNIT, INGREDIENT_CATEGORY
+from enum import Enum
 
-MACRO_NAME = Literal["Carbohydrate", "Fat", "Protein"]
-INGREDIENT_CATEGORY = Literal["Meat", "Vegetable", "Fruit", "Carbohydrate"]
+# MACRO_NAME = Literal["Carbohydrate", "Fat", "Protein"]
 
 
 class Macro(BaseModel):
-    unit: INGREDIENT_UNIT
+    unit: str
     amount: float
 
 
 class Carbohydrate(Macro):
-    unit: INGREDIENT_UNIT = "g"
+    unit: str = INGREDIENT_UNIT.g.value
 
 
 class Fat(Macro):
-    unit: INGREDIENT_UNIT = "g"
+    unit: str = INGREDIENT_UNIT.g.value
 
 
 class Protein(Macro):
-    unit: INGREDIENT_UNIT = "g"
+    unit: str = INGREDIENT_UNIT.g.value
 
 
 class Ingredient(BaseModel):
     name: str
-    # category: INGREDIENT_CATEGORY
+    # TODO: figure out category
+    # category: str
     calories: float
-    unit: INGREDIENT_UNIT
+    unit: str
     servingSize: float
     carbohydrate: Carbohydrate
     fat: Fat

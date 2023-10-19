@@ -1,12 +1,14 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from strawberry.fastapi import GraphQLRouter
-from app.externalModels.ninjaNutrients.Ingredient import NinjaNutritionClient
+import strawberry
+from app.schemas.Query import Query as QuerySchema
 
 app = FastAPI()
 
-# graphqlApp = GraphQLRouter()
-# app.include_router(graphqlApp, prefix="/graphql")
+schema = strawberry.Schema(QuerySchema)
+graphqlApp = GraphQLRouter(schema)
+app.include_router(graphqlApp, prefix="/graphql")
 
 
 @app.get("/")
@@ -14,11 +16,11 @@ async def root():
     return JSONResponse(content="Hello")
 
 
-@app.get("/test")
-async def food(searchTerm: str):
-    client = NinjaNutritionClient()
-    content = await client.query(searchTerm)
-    return JSONResponse(content)
+# @app.get("/test")
+# async def food(searchTerm: str):
+#     client = NinjaNutritionClient()
+#     content = await client.query(searchTerm)
+#     return JSONResponse(content)
 
 
 # @app.get("/food/{id}")

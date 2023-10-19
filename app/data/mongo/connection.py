@@ -9,14 +9,16 @@ MONGO_PASSWORD = os.getenv("MONGO_PASSWORD")
 MONGO_PORT = os.getenv("MONGO_PORT")
 MONGO_DB = os.getenv("MONGO_DB")
 
-
-DOCKER_MONGO_URI = (
-    f"mongodb://{MONGO_USERNAME}:{MONGO_PASSWORD}@localhost:{MONGO_PORT}/"
-)
+PORT = int(MONGO_PORT) if MONGO_PORT else 27017
 
 
-def getMongoClient(URI: str = DOCKER_MONGO_URI) -> pymongo.MongoClient:
-    return pymongo.MongoClient(URI)
+DOCKER_MONGO_URI = f"mongodb://{MONGO_USERNAME}:{MONGO_PASSWORD}@mongo:{MONGO_PORT}/"
+
+
+def getMongoClient(
+    URI: str = DOCKER_MONGO_URI, PORT: int = PORT
+) -> pymongo.MongoClient:
+    return pymongo.MongoClient(URI, port=PORT)
 
 
 def getMongoDB(DB_NAME: str = MONGO_DB):

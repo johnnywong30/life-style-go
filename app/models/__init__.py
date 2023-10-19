@@ -1,3 +1,20 @@
-from typing import Literal
+from enum import Enum
 
-INGREDIENT_UNIT = Literal["g", "kg", "oz", "lb", "cup", "ml", "l", "tsp", "tbsp"]
+
+class INGREDIENT_UNIT(Enum):
+    g = "g"
+    kg = "kg"
+    oz = "oz"
+    lb = "lb"
+    cup = "cup"
+    ml = "ml"
+    l = "l"
+    tsp = "tsp"
+    tbsp = "tbsp"
+
+
+class INGREDIENT_CATEGORY(Enum):
+    meat = "Meat"
+    vegetable = "Vegetable"
+    fruit = "Fruit"
+    carbohydrate = "Carbohydrate"

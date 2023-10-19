@@ -9,7 +9,7 @@ def getFoods(query: str) -> List[NinjaFood]:
     """
     foodFilter: Dict[str, str] = {"query": query}
     response = FOOD.find_one(foodFilter, RESULT_FILTER)
-    if not foods:
+    if not response:
         return []
     result = NinjaNutritionResult(**response)
     foods = result.foods
