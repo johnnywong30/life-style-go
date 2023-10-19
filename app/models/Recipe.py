@@ -3,6 +3,8 @@ from app.models import INGREDIENT_UNIT
 from app.models.Ingredient import Ingredient
 from typing import List, Tuple
 
+# TODO add pydantic_redis Model instead of BaseModel to cache Recipes
+
 
 class Macros(BaseModel):
     carbohydrates: Tuple[float, INGREDIENT_UNIT]

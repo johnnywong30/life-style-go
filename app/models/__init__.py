@@ -1,4 +1,5 @@
 from enum import Enum
+from uuid import uuid4
 
 
 class INGREDIENT_UNIT(Enum):
@@ -18,3 +19,7 @@ class INGREDIENT_CATEGORY(Enum):
     vegetable = "Vegetable"
     fruit = "Fruit"
     carbohydrate = "Carbohydrate"
+
+
+def ID_Factory() -> str:
+    return str(uuid4())

@@ -4,9 +4,11 @@ from strawberry.fastapi import GraphQLRouter
 import strawberry
 from app.schemas.Query import Query as QuerySchema
 
+# Redis Connection
 app = FastAPI()
 
 schema = strawberry.Schema(QuerySchema)
+
 graphqlApp = GraphQLRouter(schema)
 app.include_router(graphqlApp, prefix="/graphql")
 
