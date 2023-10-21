@@ -1,6 +1,5 @@
 kombu
 pydantic
-pydantic-redis
 pymongo
 python-dotenv
 redis

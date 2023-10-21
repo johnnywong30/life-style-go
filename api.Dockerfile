@@ -12,4 +12,4 @@ RUN pip3 install -r /usr/src/requirements-api.txt
 
 WORKDIR /usr/src
 
-CMD uvicorn --port 8001 --host 0.0.0.0 --reload app.main:app
+CMD uvicorn --port $API_PORT --host 0.0.0.0 --reload app.main:app
