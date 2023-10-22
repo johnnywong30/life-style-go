@@ -4,5 +4,6 @@ mongo = getMongoDB()
 
 RESULT_FILTER = {"_id": 0}
 
-FOOD = mongo.food
 # TODO figure out the other collections
+FOOD = mongo.food
+RECIPE = mongo.recipe

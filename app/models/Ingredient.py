@@ -1,6 +1,6 @@
-from pydantic import Field, BaseModel
+from pydantic import BaseModel, Field
 from app.models import INGREDIENT_UNIT, INGREDIENT_CATEGORY, ID_Factory
-from typing import List
+from typing import List, Dict
 
 
 class Macro(BaseModel):
@@ -21,9 +21,8 @@ class Protein(Macro):
 
 
 class Ingredient(BaseModel):
+    id: str = Field(default_factory=ID_Factory)
     name: str
-    # TODO: figure out category
-    # category: str
     calories: float
     unit: str
     servingSize: float
