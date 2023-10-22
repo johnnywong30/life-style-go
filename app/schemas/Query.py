@@ -40,5 +40,5 @@ class Query:
         return ingredients
 
     @strawberry.field
-    async def recipes(self) -> Recipe:
+    async def recipes(self) -> List[Recipe]:
         return []
