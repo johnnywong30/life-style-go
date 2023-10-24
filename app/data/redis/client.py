@@ -47,3 +47,5 @@ class RedisClient(Redis):
         self.set(name=key, value=value)
         self.expire(name=key, time=expirationTime)
         return self.getIngredients(foodQuery)
+
+    # TODO: cache recipes for quicker reads
