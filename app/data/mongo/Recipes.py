@@ -13,6 +13,10 @@ def getRecipe(id: str) -> Recipe:
 
 
 def addRecipe(recipe: Recipe) -> Recipe:
+    name = recipe.name
+    recipes = list(RECIPE.find({"name": name}))
+    if len(recipes) > 0:
+        raise Exception(f"A recipe exists with the name {name}...")
     recipeData = recipe.model_dump(mode="json")
     insertion = RECIPE.insert_one(recipeData)
     if not insertion.acknowledged:

@@ -1,5 +1,12 @@
 import strawberry
-from app.models.Ingredient import Ingredient, Macro, Carbohydrate, Fat, Protein
+from app.models.Ingredient import (
+    BaseIngredient,
+    Ingredient,
+    Macro,
+    Carbohydrate,
+    Fat,
+    Protein,
+)
 
 
 @strawberry.experimental.pydantic.type(model=Macro, all_fields=True)
@@ -24,4 +31,9 @@ class Protein:
 
 @strawberry.experimental.pydantic.type(model=Ingredient, all_fields=True)
 class Ingredient:
+    pass
+
+
+@strawberry.experimental.pydantic.input(model=BaseIngredient, all_fields=True)
+class BaseIngredient:
     pass

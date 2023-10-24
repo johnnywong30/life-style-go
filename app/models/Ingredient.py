@@ -20,9 +20,12 @@ class Protein(Macro):
     unit: str = INGREDIENT_UNIT.g.value
 
 
-class Ingredient(BaseModel):
-    id: str = Field(default_factory=ID_Factory)
+class BaseIngredient(BaseModel):
     name: str
+
+
+class Ingredient(BaseIngredient):
+    id: str = Field(default_factory=ID_Factory)
     calories: float
     unit: str
     servingSize: float
