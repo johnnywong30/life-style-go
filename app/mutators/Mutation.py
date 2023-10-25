@@ -21,6 +21,7 @@ from app.data.mongo.Recipes import (
 from typing import List
 from app.externalModels.ninjaNutrients.Client import NinjaNutritionClient
 from app.externalModels.ninjaNutrients.Ingredient import NinjaFood
+from app.data.redis.connection import getRedisConnection
 
 
 async def queryIngredients(
@@ -82,12 +83,16 @@ class Mutation:
             ingredients=queriedIngredients,
         )
         addedRecipe = addRecipe(recipe)
+        with getRedisConnection() as RedisClient:
+            RedisClient.setRecipe(addedRecipe)
         recipe = generateRecipeGraphQL(addedRecipe)
         return recipe
 
     @strawberry.mutation
     async def del_recipe(self, id: str) -> Recipe:
         deletedRecipe = delRecipe(id)
+        with getRedisConnection() as RedisClient:
+            RedisClient.delRecipe(deletedRecipe.name)
         recipe = generateRecipeGraphQL(deletedRecipe)
         return recipe
 
@@ -105,6 +110,8 @@ class Mutation:
             description=description,
         )
         updatedRecipe = updateRecipe(id=id, patchData=patch)
+        with getRedisConnection() as RedisClient:
+            RedisClient.setRecipe(updatedRecipe)
         recipe = generateRecipeGraphQL(updatedRecipe)
         return recipe
 
@@ -116,6 +123,8 @@ class Mutation:
             return getRecipe(id)
         queriedIngredients = await queryIngredients(ingredients)
         updatedRecipe = addIngredients(id=id, ingredients=queriedIngredients)
+        with getRedisConnection() as RedisClient:
+            RedisClient.setRecipe(updatedRecipe)
         recipe = generateRecipeGraphQL(updatedRecipe)
         return recipe
 
@@ -124,6 +133,8 @@ class Mutation:
         if len(ingredients) == 0:
             return getRecipe(id)
         updatedRecipe = delIngredients(id=id, ingredientsToDelete=ingredients)
+        with getRedisConnection() as RedisClient:
+            RedisClient.setRecipe(updatedRecipe)
         recipe = generateRecipeGraphQL(updatedRecipe)
         return recipe
 
@@ -133,5 +144,7 @@ class Mutation:
     ) -> Recipe:
         queriedIngredients = await queryIngredients(ingredients)
         updatedRecipe = updateIngredients(id=id, ingredients=queriedIngredients)
+        with getRedisConnection() as RedisClient:
+            RedisClient.setRecipe(updatedRecipe)
         recipe = generateRecipeGraphQL(updatedRecipe)
         return recipe

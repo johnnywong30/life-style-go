@@ -16,16 +16,19 @@ class Recipe(Patch_Recipe):
     ingredients: List[Ingredient] = []
 
     @computed_field
+    @property
     def carbohydrate(self) -> Carbohydrate:
         total = sum([ingredient.carbohydrate.amount for ingredient in self.ingredients])
         return Carbohydrate(amount=total)
 
     @computed_field
+    @property
     def fat(self) -> Fat:
         total = sum([ingredient.fat.amount for ingredient in self.ingredients])
         return Fat(amount=total)
 
     @computed_field
+    @property
     def protein(self) -> Protein:
         total = sum([ingredient.protein.amount for ingredient in self.ingredients])
         return Protein(amount=total)
